@@ -1,5 +1,5 @@
 # Slack Auto Away 
-Set Slack to away using legacy API tokens with no need to install apps or use webhooks.  
+Set Slack to away using legacy API tokens with no need to install apps or use webhooks. Once compiled to a binary, you can set it up to be compatible with Windows, Linux and macOS.
 
 ## Instructions 
 1. Log in to your Slack team (SLACK_URL=https://[TEAMNAME].slack.com/)
