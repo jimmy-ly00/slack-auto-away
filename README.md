@@ -1,19 +1,84 @@
 # Slack Auto Away 
-Set Slack to away using legacy API tokens with no need to install apps or use webhooks.  
+Set Slack to away using legacy API tokens without the need to install apps or use webhooks. Once compiled to a binary, you can set up schedules to be away and auto (active) at specific times. Uses go which is cross-compatible with with Windows, Linux and macOS.
 
-## Instructions 
-1. Log in to your Slack team (SLACK_URL=https://[TEAMNAME].slack.com/)
-2. Get API_TOKEN by following the following steps:
+## Instructions
+1. Log in to your Slack team (https://[TEAMNAME].slack.com/) and get your SLACK_API token by following the following steps:
     1. Go to https://[TEAMNAME].slack.com/customize/emoji
     2. Press F12 to get Developer Tools
-    3. Go to JavScript "Console" tab and run to get API TOKEN window.prompt("your api token is: ", TS.boot_data.api_token)
-    References: (Method 4) https://github.com/erroneousboat/slack-term/wiki#running-slack-term-without-legacy-tokens and https://github.com/yuya373/emacs-slack#how-to-get-token
-3. git clone https://github.com/jimmy-ly00/slack-auto-away
-4. Modify SLACK_URL and API_TOKEN variables
-5. go get -u -v github.com/akamensky/argparse
-6. go build main.go
-7. Set up Task Scheduler for Windows or CronJob for Linux and macOS
+    3. Go to JavaScript "Console" tab and run `window.prompt("Your SLACK_API token is: ", TS.boot_data.api_token)` [[1]](https://github.com/erroneousboat/slack-term/wiki#running-slack-term-without-legacy-tokens)[[2]](https://github.com/yuya373/emacs-slack#how-to-get-token)
+    
+2. Download [releases](https://github.com/jimmy-ly00/slack-auto-away/releases)
 
-## Windows
+3. Set SLACK_API environment variables then restart the Terminals
 
-## Linux and macOS
+    * Windows
+
+      ```sh
+      setx SLACK_API "xoxs-....."
+      ```
+
+    * Linux 
+
+      ```sh
+      echo "export SLACK_API="xoxs-....."" >> ~/.bashrc
+      ```
+
+    * macOS
+
+      ```sh
+      echo "export SLACK_API="xoxs-....."" >> ~/.zshrc
+      ```
+    
+4. Test if it's working e.g. `./slackaway -s away`
+
+5. Set up tasks on Task Scheduler for Windows or cron jobs for Linux and macOS
+
+## Build (optional)
+```sh
+git clone https://github.com/jimmy-ly00/slack-auto-away 
+go get -u -v github.com/akamensky/argparse
+go build -o slackaway main.go
+```
+
+## Test
+
+```sh
+jly@JIMMY-LAPTOP:/mnt/c/Users/Jimmy/GitHub/slack-auto-away$ ./slackaway -h
+usage: slack-auto-away [-h|--help] -s|--status (active|away)
+
+                       Set a slack status
+
+Arguments:
+
+  -h  --help    Print help information
+  -s  --status  Set a slack status
+jly@JIMMY-LAPTOP:/mnt/c/Users/Jimmy/GitHub/slack-auto-away$ ./slackaway -s away
+jly@JIMMY-LAPTOP:/mnt/c/Users/Jimmy/GitHub/slack-auto-away$ ./slackaway -s auto
+```
+
+## Scheduling
+
+### Windows
+
+Add two separate scheduled tasks. Every day sets auto (active) at 9:00am and sets away at 18:00.
+
+```sh
+C:\Users\Jimmy\>schtasks /create /sc daily /tn "SlackAutoAway\auto" /tr "'c:\Google Drive\Misc\Scripts\slackaway-windows-amd64.exe' -s auto" /st 09:00
+
+C:\Users\Jimmy\>schtasks /create /sc daily /tn "SlackAutoAway\away" /tr "'c:\Google Drive\Misc\Scripts\slackaway-windows-amd64.exe' -s away" /st 18:00
+```
+
+### Linux and macOS
+
+Edit crontab to add two jobs. Every day sets auto (active) at 9:00am and sets away at 18:00.
+
+```sh
+jimmy@Jimmys-Mac ~/> crontab -e
+0 9 * * * /bin/slackaway -s auto
+0 18 * * * /bin/slackaway -s away
+jimmy@Jimmys-Mac ~/> crontab -l
+
+0 9 * * * /bin/slackaway -s auto
+0 18 * * * /bin/slackaway -s away
+```
+
