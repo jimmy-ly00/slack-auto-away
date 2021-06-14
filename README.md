@@ -40,7 +40,7 @@ go get -u -v github.com/akamensky/argparse
 go build -o slackaway main.go
 ```
 
-## Test
+## Testing
 
 ```sh
 jly@JIMMY-LAPTOP:/mnt/c/Users/Jimmy/GitHub/slack-auto-away$ ./slackaway -h
