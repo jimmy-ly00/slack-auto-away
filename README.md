@@ -77,7 +77,6 @@ jimmy@Jimmys-Mac ~/> crontab -e
 0 9 * * * /bin/slackaway -s auto
 0 18 * * * /bin/slackaway -s away
 jimmy@Jimmys-Mac ~/> crontab -l
-
 0 9 * * * /bin/slackaway -s auto
 0 18 * * * /bin/slackaway -s away
 ```
