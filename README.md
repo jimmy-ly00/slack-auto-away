@@ -60,24 +60,24 @@ jly@JIMMY-LAPTOP:/mnt/c/Users/Jimmy/GitHub/slack-auto-away$ ./slackaway -s auto
 
 ### Windows
 
-Add two separate scheduled tasks. Every day sets auto (active) at 9:00am and sets away at 18:00.
+Add two separate scheduled tasks. Weekdays sets auto (active) at 9:00am and sets away at 18:00.
 
 ```sh
-C:\Users\Jimmy\>schtasks /create /sc daily /tn "SlackAutoAway\auto" /tr "'c:\Google Drive\Misc\Scripts\slackaway-windows-amd64.exe' -s auto" /st 09:00
+C:\Users\Jimmy\>schtasks /create /sc weekly /D mon,tue,wed,thu,fri /tn "SlackAutoAway\auto" /tr "'c:\Google Drive\Misc\Scripts\slackaway-windows-amd64.exe' -s auto" /st 09:00
 
-C:\Users\Jimmy\>schtasks /create /sc daily /tn "SlackAutoAway\away" /tr "'c:\Google Drive\Misc\Scripts\slackaway-windows-amd64.exe' -s away" /st 18:00
+C:\Users\Jimmy\>schtasks /create /sc weekly /D mon,tue,wed,thu,fri /tn "SlackAutoAway\away" /tr "'c:\Google Drive\Misc\Scripts\slackaway-windows-amd64.exe' -s away" /st 18:00
 ```
 
 ### Linux and macOS
 
-Edit crontab to add two jobs. Every day sets auto (active) at 9:00am and sets away at 18:00.
+Edit crontab to add two jobs. Weekdays sets auto (active) at 9:00am and sets away at 18:00.
 
 ```sh
 jimmy@Jimmys-Mac ~/> crontab -e
-0 9 * * * /bin/slackaway -s auto
-0 18 * * * /bin/slackaway -s away
+0 9 * * 1-5 /bin/slackaway -s auto
+0 18 * * 1-5 /bin/slackaway -s away
 jimmy@Jimmys-Mac ~/> crontab -l
-0 9 * * * /bin/slackaway -s auto
-0 18 * * * /bin/slackaway -s away
+0 9 * * 1-5 /bin/slackaway -s auto
+0 18 * * 1-5 /bin/slackaway -s away
 ```
 
